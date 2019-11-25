@@ -64,7 +64,7 @@ for index, firstrowitem in enumerate(inputmatrix[0]):
         S.append([index, 0])
 
 # populate S with second row of inputmatrix
-for index, firstrowitem in enumerate(inputmatrix[1]):
+for index, secondrowitem in enumerate(inputmatrix[1]):
     if inputmatrix[1][index] == 0:
         S.append([index, 1])
 
