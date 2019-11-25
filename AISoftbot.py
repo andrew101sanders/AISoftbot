@@ -70,6 +70,7 @@ for index, secondrowitem in enumerate(inputmatrix[1]):
 
 # Go through seeds in S and try to find path
 # TODO break if it finds a path to the bottom
+# TODO keep track of 'highest' and if path is found and highest Y = 1, change the pixel above it to 0
 for initialseed in S:
     G = []
     visited = []
