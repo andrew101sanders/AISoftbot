@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import numpy as np
 
-file = open('C:/users/andrew/desktop/input.txt')
+file = open('input.txt')
 filelines = file.readlines()
 inputmatrix = []  # [Y][X] - [Rows][Columns] required for matplot (and yes this makes it very confusing to program lol)
 S = []  # Original seeds from first two rows in format [x,y]
@@ -84,7 +84,7 @@ for initialseed in S:
             checksurrounding(temp)
 
 
-print(visited)
+print(Lowest)
 ax = plt.subplot()
 cmap = colors.ListedColormap(['red', 'blue'])
 ax.imshow(inputmatrix, cmap)
