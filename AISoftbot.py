@@ -32,9 +32,11 @@ for index, firstrowitem in enumerate(inputmatrix[1]):
     if inputmatrix[1][index] == 0:
         S.append([1, index])
 
-for initialseeds in S:
-    print(initialseeds)
-
+# Go through seeds in S and try to find path
+for initialseed in S:
+    if initialseed not in Marked:
+        print(initialseed)
+        Marked.append(initialseed)
 
 ax = plt.subplot()
 cmap = colors.ListedColormap(['red', 'blue'])
