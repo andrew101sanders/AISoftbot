@@ -28,31 +28,51 @@ def checksurrounding(node):  # param: [X, Y]
     # TODO if point = 1, run it through another function that
     #  checks the 3 points that are away from initial node. eg node[
     #  3, 3] checks [4, 3] and it's a 1, it would check [4, 2], [5, 2], [5, 3]
-
-    if left:
-        if inputmatrix[node[1]][node[0] - 1] == 0:
-            addtolist([node[0] - 1, node[1]])
-        if top:
-            if inputmatrix[node[1] - 1][node[0] - 1] == 0:
-                addtolist([node[0] - 1, node[1] - 1])
-        if bottom:
-            if inputmatrix[node[1] + 1][node[0] - 1] == 0:
-                addtolist([node[0] - 1, node[1] + 1])
+    
+    # If not on top row
     if top:
-        if inputmatrix[node[1] - 1][node[0]] == 0:
+        # if not on far left column and not on top row
+        if left:
+            # check NW
+            if inputmatrix[node[1]-1][node[0]-1] == 0:
+                addtolist([node[0]-1, node[1]-1])
+        # check N 
+        if inputmatrix[node[1]-1][node[0]] == 0:
             addtolist([node[0], node[1]-1])
+        
+        # if not on far right column and not on top row
+        if right:
+            #check NE
+            if inputmatrix[node[1]-1][node[0]+1] == 0:
+                addtolist([node[0]+1, node[1]-1])
+    
+    # if not on far right
     if right:
-        if inputmatrix[node[1]][node[0] + 1] == 0:
+        # check E
+        if inputmatrix[node[1]][node[0]+1] == 0:
             addtolist([node[0]+1, node[1]])
-        if top:
-            if inputmatrix[node[1] - 1][node[0] + 1] == 0:
-                addtolist([node[0] + 1, node[1] - 1])
-        if bottom:
-            if inputmatrix[node[1] + 1][node[0] + 1] == 0:
-                addtolist([node[0] + 1, node[1] + 1])
+    
+    # if not on bottom row
     if bottom:
-        if inputmatrix[node[1] + 1][node[0]] == 0:
+        # if not on bottom row and not on far right column
+        if right:
+            # Check SE
+            if inputmatrix[node[1]+1][node[0]+1] == 0:
+                addtolist([node[0]+1, node[1]+1])
+        # check S
+        if inputmatrix[node[1]+1][node[0]] == 0:
             addtolist([node[0], node[1]+1])
+        # if not on bottom row and not on far left column
+        if left:
+            # check SW
+            if inputmatrix[node[1]+1][node[0]-1] ==0:
+                addtolist([node[0]-1, node[1]+1])
+    
+    # if not on far left 
+    if left:
+        # check W
+        if inputmatrix[node[1]][node[0]-1] == 0:
+            addtolist([node[0]-1, node[1]])
 
 
 # populate inputmatrix
