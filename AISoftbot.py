@@ -24,6 +24,11 @@ def checksurrounding(node):  # param: [X, Y]
     right = node[0]+1 <= 19
     bottom = node[1]+1 <= 19
     # TODO change this to the correct order (idk if that's needed tho lol) top-left and then go clockwise
+    #
+    # TODO if point = 1, run it through another function that
+    #  checks the 3 points that are away from initial node. eg node[
+    #  3, 3] checks [4, 3] and it's a 1, it would check [4, 2], [5, 2], [5, 3]
+
     if left:
         if inputmatrix[node[1]][node[0] - 1] == 0:
             addtolist([node[0] - 1, node[1]])
@@ -77,6 +82,7 @@ for initialseed in S:
     if initialseed not in Marked:
         Marked.append(initialseed)
         checksurrounding(initialseed)
+        visited.append(initialseed)
         while G.__len__() != 0:
             temp = G.pop()
             if temp[1] > Lowest[1]:
@@ -84,6 +90,7 @@ for initialseed in S:
             visited.append(temp)
             Marked.append(temp)
             checksurrounding(temp)
+    print(visited)
 
 # TODO implement another color
 print(Lowest)
