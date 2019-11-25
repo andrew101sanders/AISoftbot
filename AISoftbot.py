@@ -69,6 +69,7 @@ for index, secondrowitem in enumerate(inputmatrix[1]):
         S.append([index, 1])
 
 # Go through seeds in S and try to find path
+# TODO break if it finds a path to the bottom
 for initialseed in S:
     G = []
     visited = []
@@ -83,7 +84,7 @@ for initialseed in S:
             Marked.append(temp)
             checksurrounding(temp)
 
-
+# TODO implement another color
 print(Lowest)
 ax = plt.subplot()
 cmap = colors.ListedColormap(['red', 'blue'])
