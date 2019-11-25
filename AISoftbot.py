@@ -4,40 +4,87 @@ import numpy as np
 
 file = open('C:/users/andrew/desktop/input.txt')
 filelines = file.readlines()
-inputmatrix = []  # [y][x] - [Rows][Columns] required for matplot
+inputmatrix = []  # [Y][X] - [Rows][Columns] required for matplot (and yes this makes it very confusing to program lol)
 S = []  # Original seeds from first two rows in format [x,y]
-G = []  # Surrounding seeds
+G = []  # exploring seeds
 Marked = []  # Seeds that have already been explored
+Lowest = [0, 0]  # [X, Y]
+visited = []
 
 
-def checksurrounding(node):  # [X, Y]
-    print('hi')
+def addtolist(node):  # param: [X, Y]
+    if node not in G and node not in Marked:
+        G.append(node)
+
+
+def checksurrounding(node):  # param: [X, Y]
+    addtolist(node)
+    left = node[0]-1 >= 0
+    top = node[1]-1 >= 0
+    right = node[0]+1 <= 19
+    bottom = node[1]+1 <= 19
+    # TODO change this to the correct order (idk if that's needed tho lol) top-left and then go clockwise
+    if left:
+        if inputmatrix[node[1]][node[0] - 1] == 0:
+            addtolist([node[0] - 1, node[1]])
+        if top:
+            if inputmatrix[node[1] - 1][node[0] - 1] == 0:
+                addtolist([node[0] - 1, node[1] - 1])
+        if bottom:
+            if inputmatrix[node[1] + 1][node[0] - 1] == 0:
+                addtolist([node[0] - 1, node[1] + 1])
+    if top:
+        if inputmatrix[node[1] - 1][node[0]] == 0:
+            addtolist([node[0], node[1]-1])
+    if right:
+        if inputmatrix[node[1]][node[0] + 1] == 0:
+            addtolist([node[0]+1, node[1]])
+        if top:
+            if inputmatrix[node[1] - 1][node[0] + 1] == 0:
+                addtolist([node[0] + 1, node[1] - 1])
+        if bottom:
+            if inputmatrix[node[1] + 1][node[0] + 1] == 0:
+                addtolist([node[0] + 1, node[1] + 1])
+    if bottom:
+        if inputmatrix[node[1] + 1][node[0]] == 0:
+            addtolist([node[0], node[1]+1])
 
 
 # populate inputmatrix
-for x in filelines:
+for y in filelines:
     temp = []
-    for y in x:
-        if y != '\n':
-            temp.append(int(y))
+    for x in y:
+        if x != '\n':
+            temp.append(int(x))
     inputmatrix.append(temp)
 
 # populate S with first row of inputmatrix
 for index, firstrowitem in enumerate(inputmatrix[0]):
     if inputmatrix[0][index] == 0:
-        S.append([0, index])
+        S.append([index, 0])
 
 # populate S with second row of inputmatrix
 for index, firstrowitem in enumerate(inputmatrix[1]):
     if inputmatrix[1][index] == 0:
-        S.append([1, index])
+        S.append([index, 1])
 
 # Go through seeds in S and try to find path
 for initialseed in S:
+    G = []
+    visited = []
     if initialseed not in Marked:
-        print(initialseed)
         Marked.append(initialseed)
+        checksurrounding(initialseed)
+        while G.__len__() != 0:
+            temp = G.pop()
+            if temp[1] > Lowest[1]:
+                Lowest = temp
+            visited.append(temp)
+            Marked.append(temp)
+            checksurrounding(temp)
 
+
+print(visited)
 ax = plt.subplot()
 cmap = colors.ListedColormap(['red', 'blue'])
 ax.imshow(inputmatrix, cmap)
