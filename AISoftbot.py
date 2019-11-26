@@ -35,9 +35,6 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
     right = node[0] + 1 <= 19
     bottom = node[1] + 1 <= 19
 
-    # TODO if point = 1, run it through another function that
-    #  checks the 3 points that are away from initial node. eg node[
-    #  3, 3] checks [4, 3] and it's a 1, it would check [4, 2], [5, 2], [5, 3]
 
     # If not on top row
     if top:
@@ -168,9 +165,6 @@ def checksurrounding(node):  # param: [X, Y]
     right = node[0] + 1 <= 19
     bottom = node[1] + 1 <= 19
 
-    # TODO if point = 1, run it through another function that
-    #  checks the 3 points that are away from initial node. eg node[
-    #  3, 3] checks [4, 3] and it's a 1, it would check [4, 2], [5, 2], [5, 3]
 
     # If not on top row
     if top:
@@ -300,8 +294,6 @@ def checkSeeds(seed):
 
 
 # Go through seeds in S and try to find path
-# TODO break if it finds a path to the bottom
-# TODO keep track of 'highest' and if path is found and highest Y = 1, change the pixel above it to 0
 for initialseed in S:
     G = []
     visited = []
@@ -312,7 +304,6 @@ for initialseed in S:
 
 for v in visited:
     outputList[v[1]][v[0]] = 2
-# TODO implement another color
 output = open('correctedImage.txt', 'w')
 for y in inputmatrix:
     for x in y:
