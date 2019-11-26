@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import numpy as np
 
-file = open('input2.txt')
+file = open('input.txt')
 filelines = file.readlines()
 file.close()
 original = []
@@ -22,12 +22,12 @@ visited = []
 
 def addtolist(node):  # param: [X, Y]
     if node not in G and node not in Marked:
+        print("Adding " + str(node) + " to G")
         G.append(node)
 
 
 # check potential error node
 def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, checkSW, checkW):
-    #  addtotemp(node)
     #  print(node)
     left = node[0] - 1 >= 0
     top = node[1] - 1 >= 0
@@ -42,26 +42,20 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkNW:
                 if inputmatrix[node[1] - 1][node[0] - 1] == 0 and [node[0] - 1, node[1] - 1] not in FilledGaps:
                     if inputmatrix[node[1] - 1][node[0] - 1] not in Marked:
-                        print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
-                        # addtolist([node[1]-1, node[0]-1])
-                        # Marked.append(node)
-                        # visited.append([node[0], node[1]])
                         return
 
         # check N 
         if checkN:
             if inputmatrix[node[1] - 1][node[0]] == 0 and [node[0], node[1] - 1] not in FilledGaps:
                 if inputmatrix[node[1] - 1][node[0]] not in Marked:
-                    print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
-                    # addtolist([node[1]-1, node[0]])
-                    # Marked.append(node)
-                    # visited.append([node[0], node[1]])
                     return
 
         # if not on far right column and not on top row
@@ -70,13 +64,10 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkNE:
                 if inputmatrix[node[1] - 1][node[0] + 1] == 0 and [node[0] + 1, node[1] - 1] not in FilledGaps:
                     if inputmatrix[node[1] - 1][node[0] + 1] not in Marked:
-                        print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
-                        # addtolist([node[1]-1, node[0]+1])
-                        # Marked.append(node)
-                        # visited.append([node[0], node[1]])
                         return
 
     # if not on far right
@@ -85,13 +76,10 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
         if checkE:
             if inputmatrix[node[1]][node[0] + 1] == 0 and [node[0] + 1, node[1]] not in FilledGaps:
                 if inputmatrix[node[1]][node[0] + 1] not in Marked:
-                    print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
-                    # addtolist([node[1], node[0]+1])
-                    # Marked.append(node)
-                    # visited.append([node[0], node[1]])
                     return
 
     # if not on bottom row
@@ -102,26 +90,20 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkSE:
                 if inputmatrix[node[1] + 1][node[0] + 1] == 0 and [node[0] + 1, node[1] + 1] not in FilledGaps:
                     if inputmatrix[node[1] + 1][node[0] + 1] not in Marked:
-                        print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
-                        # addtolist([node[1]+1, node[0]+1])
-                        # Marked.append(node)
-                        # visited.append([node[0], node[1]])
                         return
 
         # check S
         if checkS:
             if inputmatrix[node[1] + 1][node[0]] == 0 and [node[0], node[1] + 1] not in FilledGaps:
                 if inputmatrix[node[1] + 1][node[0]] not in Marked:
-                    print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
-                    # addtolist([node[1]+1, node[0]])
-                    # Marked.append(node)
-                    # visited.append([node[0], node[1]])
                     return
 
         # if not on bottom row and not on far left column
@@ -130,13 +112,10 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkSW:
                 if inputmatrix[node[1] + 1][node[0] - 1] == 0 and [node[0] - 1, node[1] + 1] not in FilledGaps:
                     if inputmatrix[node[1] + 1][node[0] - 1] not in Marked:
-                        print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
-                        # addtolist([node[1]+1, node[0]-1])
-                        # Marked.append(node)
-                        # visited.append([node[0], node[1]])
                         return
 
     # if not on far left 
@@ -145,18 +124,14 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
         if checkW:
             if inputmatrix[node[1]][node[0] - 1] == 0 and [node[0] - 1, node[1]] not in FilledGaps:
                 if inputmatrix[node[1]][node[0] - 1] not in Marked:
-                    print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
-                    # addtolist([node[1], node[0]-1])
-                    # Marked.append(node)
-                    # visited.append([node[0], node[1]])
                     return
 
 
 def checksurrounding(node):  # param: [X, Y]
-    # print(node)
     left = node[0] - 1 >= 0
     top = node[1] - 1 >= 0
     right = node[0] + 1 <= 19
@@ -181,7 +156,6 @@ def checksurrounding(node):  # param: [X, Y]
         # if not on far right column and not on top row
         if right:
             # check NE
-
             if inputmatrix[node[1] - 1][node[0] + 1] == 1 and node not in FilledGaps:
                 checkpotential([node[0] + 1, node[1] - 1], False, False, True, False, False, False, False, False)
             if inputmatrix[node[1] - 1][node[0] + 1] == 0 and [node[0] + 1, node[1] - 1] not in FilledGaps:
@@ -190,7 +164,6 @@ def checksurrounding(node):  # param: [X, Y]
     # if not on far right
     if right:
         # check E
-
         if inputmatrix[node[1]][node[0] + 1] == 1 and node not in FilledGaps:
             checkpotential([node[0] + 1, node[1]], False, False, False, True, False, False, False, False)
         if inputmatrix[node[1]][node[0] + 1] == 0 and [node[0] + 1, node[1]] not in FilledGaps:
@@ -273,9 +246,10 @@ def checkSeeds(seed):
         checksurrounding(seed)
         while G:
             popped = G.pop(0)
+            print(popped)
             if popped[1] > EndOfPath[1]:
                 EndOfPath = popped
-            if popped[1] == 19:
+            if popped[1] == 19 and len(G)==0:
                 if seed[1] - 1 >= 0:
                     StartOfPath = [seed[0], seed[1]]
                     if inputmatrix[seed[1] - 1][seed[0]] == 1:
@@ -288,7 +262,7 @@ def checkSeeds(seed):
             visited.append(popped)
             if popped not in Marked:
                 Marked.append(popped)
-                print('checking ' + str(popped))
+                #print('checking ' + str(popped))
                 checksurrounding(popped)
     return 0
 
@@ -439,7 +413,10 @@ for y in inputmatrix:
 output.close()
 
 # print(FilledGaps)
-
+print("visited nodes: ")
+print(visited)
+print("Marked nodes: ")
+print(Marked)
 plt.figure('AI Assignment 3', figsize=(8,8))
 ax = plt.subplot(223)
 cmap = colors.ListedColormap(['red', 'blue', 'yellow'])
