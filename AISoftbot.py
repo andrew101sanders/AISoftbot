@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import numpy as np
 
-file = open('input.txt')
+file = open('input2.txt')
 filelines = file.readlines()
 file.close()
 original = []
@@ -440,7 +440,7 @@ output.close()
 
 # print(FilledGaps)
 
-plt.figure(figsize=(8,8))
+plt.figure('AI Assignment 3', figsize=(8,8))
 ax = plt.subplot(223)
 cmap = colors.ListedColormap(['red', 'blue', 'yellow'])
 ax.imshow(outputList, cmap)
