@@ -10,6 +10,7 @@ file.close()
 original = []
 inputmatrix = []  # [Y][X] - [Rows][Columns] required for matplot (and yes this makes it very confusing to program lol)
 outputList = []
+fulloutputlist = []
 bestpathvisual = []
 FilledGaps = []
 S = []  # Original seeds from first two rows in format [x,y]
@@ -18,6 +19,7 @@ Marked = []  # Seeds that have already been explored
 StartOfPath = []
 EndOfPath = [0, 0]  # [X, Y]
 visited = []
+fullvisited = []
 
 
 def addtolist(node):  # param: [X, Y]
@@ -42,7 +44,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkNW:
                 if inputmatrix[node[1] - 1][node[0] - 1] == 0 and [node[0] - 1, node[1] - 1] not in FilledGaps:
                     if inputmatrix[node[1] - 1][node[0] - 1] not in Marked:
-                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        # print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
@@ -52,7 +54,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
         if checkN:
             if inputmatrix[node[1] - 1][node[0]] == 0 and [node[0], node[1] - 1] not in FilledGaps:
                 if inputmatrix[node[1] - 1][node[0]] not in Marked:
-                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    # print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
@@ -64,7 +66,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkNE:
                 if inputmatrix[node[1] - 1][node[0] + 1] == 0 and [node[0] + 1, node[1] - 1] not in FilledGaps:
                     if inputmatrix[node[1] - 1][node[0] + 1] not in Marked:
-                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        # print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
@@ -76,7 +78,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
         if checkE:
             if inputmatrix[node[1]][node[0] + 1] == 0 and [node[0] + 1, node[1]] not in FilledGaps:
                 if inputmatrix[node[1]][node[0] + 1] not in Marked:
-                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    # print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
@@ -90,7 +92,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkSE:
                 if inputmatrix[node[1] + 1][node[0] + 1] == 0 and [node[0] + 1, node[1] + 1] not in FilledGaps:
                     if inputmatrix[node[1] + 1][node[0] + 1] not in Marked:
-                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        # print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
@@ -100,7 +102,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
         if checkS:
             if inputmatrix[node[1] + 1][node[0]] == 0 and [node[0], node[1] + 1] not in FilledGaps:
                 if inputmatrix[node[1] + 1][node[0]] not in Marked:
-                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    # print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
@@ -112,7 +114,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
             if checkSW:
                 if inputmatrix[node[1] + 1][node[0] - 1] == 0 and [node[0] - 1, node[1] + 1] not in FilledGaps:
                     if inputmatrix[node[1] + 1][node[0] - 1] not in Marked:
-                        #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                        # print('changing ' + str([node[0], node[1]]) + ' to 0')
                         inputmatrix[node[1]][node[0]] = 0
                         FilledGaps.append(node)
                         addtolist(node)
@@ -124,7 +126,7 @@ def checkpotential(node, checkNW, checkN, checkNE, checkE, checkSE, checkS, chec
         if checkW:
             if inputmatrix[node[1]][node[0] - 1] == 0 and [node[0] - 1, node[1]] not in FilledGaps:
                 if inputmatrix[node[1]][node[0] - 1] not in Marked:
-                    #print('changing ' + str([node[0], node[1]]) + ' to 0')
+                    # print('changing ' + str([node[0], node[1]]) + ' to 0')
                     inputmatrix[node[1]][node[0]] = 0
                     FilledGaps.append(node)
                     addtolist(node)
@@ -226,6 +228,12 @@ for n in inputmatrix:
     original.append(temp)
 
 
+for n in inputmatrix:
+    temp = []
+    for x in n:
+        temp.append(x)
+    fulloutputlist.append(temp)
+
 # populate S with first row of inputmatrix
 for index, firstrowitem in enumerate(inputmatrix[0]):
     if inputmatrix[0][index] == 0:
@@ -240,6 +248,7 @@ for index, secondrowitem in enumerate(inputmatrix[1]):
 def checkSeeds(seed):
     global StartOfPath
     global EndOfPath
+    foundtrail = False
     if seed not in Marked:
         Marked.append(seed)
         visited.append(seed)
@@ -249,21 +258,30 @@ def checkSeeds(seed):
             print(popped)
             if popped[1] > EndOfPath[1]:
                 EndOfPath = popped
-            if popped[1] == 19 and len(G)==0:
-                if seed[1] - 1 >= 0:
-                    StartOfPath = [seed[0], seed[1]]
-                    if inputmatrix[seed[1] - 1][seed[0]] == 1:
-                        inputmatrix[seed[1] - 1][seed[0]] = 0
-                        visited.append([seed[0], seed[1] - 1])
-                        FilledGaps.append([seed[0], seed[1] - 1])
-                        StartOfPath = [seed[0], seed[1] - 1]
+            if not foundtrail:
+                if popped[1] == 19:
+                    if seed[1] - 1 >= 0:
+                        StartOfPath = [seed[0], seed[1]]
+                        if inputmatrix[seed[1] - 1][seed[0]] == 1:
+                            inputmatrix[seed[1] - 1][seed[0]] = 0
+                            visited.append([seed[0], seed[1] - 1])
+                            FilledGaps.append([seed[0], seed[1] - 1])
+                            StartOfPath = [seed[0], seed[1] - 1]
+                    visited.append(popped)
+                    foundtrail = True
+                    for n in visited:
+                        temp = []
+                        for x in n:
+                            temp.append(x)
+                        fullvisited.append(temp)
                 visited.append(popped)
-                return 1
-            visited.append(popped)
+            else:
+                fullvisited.append(popped)
             if popped not in Marked:
                 Marked.append(popped)
-                #print('checking ' + str(popped))
+                # print('checking ' + str(popped))
                 checksurrounding(popped)
+    if foundtrail: return 1
     return 0
 
 
@@ -296,7 +314,7 @@ def reconstruct(camefrom, current):
 
 
 def distance(a, b):
-    return math.sqrt((b[1] - a[1])**2 + (b[0] - a[0])**2)
+    return math.sqrt((b[1] - a[1]) ** 2 + (b[0] - a[0]) ** 2)
 
 
 def getneighbors(nodeToCheck):
@@ -307,29 +325,29 @@ def getneighbors(nodeToCheck):
     right = nodeToCheck[0] + 1 <= 19
     bottom = nodeToCheck[1] + 1 <= 19
     if top and left:
-        if [nodeToCheck[0]-1, nodeToCheck[1]-1] in visited:
-            templist.append([nodeToCheck[0]-1, nodeToCheck[1]-1])
+        if [nodeToCheck[0] - 1, nodeToCheck[1] - 1] in visited:
+            templist.append([nodeToCheck[0] - 1, nodeToCheck[1] - 1])
     if top:
-        if [nodeToCheck[0], nodeToCheck[1]-1] in visited:
-            templist.append([nodeToCheck[0], nodeToCheck[1]-1])
+        if [nodeToCheck[0], nodeToCheck[1] - 1] in visited:
+            templist.append([nodeToCheck[0], nodeToCheck[1] - 1])
     if top and right:
-        if [nodeToCheck[0]+1, nodeToCheck[1]-1] in visited:
-            templist.append([nodeToCheck[0]+1, nodeToCheck[1]-1])
+        if [nodeToCheck[0] + 1, nodeToCheck[1] - 1] in visited:
+            templist.append([nodeToCheck[0] + 1, nodeToCheck[1] - 1])
     if right:
-        if [nodeToCheck[0]+1, nodeToCheck[1]] in visited:
-            templist.append([nodeToCheck[0]+1, nodeToCheck[1]])
+        if [nodeToCheck[0] + 1, nodeToCheck[1]] in visited:
+            templist.append([nodeToCheck[0] + 1, nodeToCheck[1]])
     if right and bottom:
-        if [nodeToCheck[0]+1, nodeToCheck[1]+1] in visited:
-            templist.append([nodeToCheck[0]+1, nodeToCheck[1]+1])
+        if [nodeToCheck[0] + 1, nodeToCheck[1] + 1] in visited:
+            templist.append([nodeToCheck[0] + 1, nodeToCheck[1] + 1])
     if bottom:
-        if [nodeToCheck[0], nodeToCheck[1]+1] in visited:
-            templist.append([nodeToCheck[0], nodeToCheck[1]+1])
+        if [nodeToCheck[0], nodeToCheck[1] + 1] in visited:
+            templist.append([nodeToCheck[0], nodeToCheck[1] + 1])
     if bottom and left:
-        if [nodeToCheck[0]-1, nodeToCheck[1]+1] in visited:
-            templist.append([nodeToCheck[0]-1, nodeToCheck[1]+1])
+        if [nodeToCheck[0] - 1, nodeToCheck[1] + 1] in visited:
+            templist.append([nodeToCheck[0] - 1, nodeToCheck[1] + 1])
     if left:
-        if [nodeToCheck[0]-1, nodeToCheck[1]] in visited:
-            templist.append([nodeToCheck[0]-1, nodeToCheck[1]])
+        if [nodeToCheck[0] - 1, nodeToCheck[1]] in visited:
+            templist.append([nodeToCheck[0] - 1, nodeToCheck[1]])
 
     return templist
 
@@ -395,6 +413,9 @@ bestpath = astar()
 for v in visited:
     outputList[v[1]][v[0]] = 2
 
+for k in fullvisited:
+    fulloutputlist[k[1]][k[0]] = 2
+
 # This is for visualizing the best path - found using A*
 for n in inputmatrix:
     temp = []
@@ -417,8 +438,8 @@ print("visited nodes: ")
 print(visited)
 print("Marked nodes: ")
 print(Marked)
-plt.figure('AI Assignment 3', figsize=(8,8))
-ax = plt.subplot(223)
+plt.figure('AI Assignment 3', figsize=(8, 8))
+ax = plt.subplot(234)
 cmap = colors.ListedColormap(['red', 'blue', 'yellow'])
 ax.imshow(outputList, cmap)
 ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
@@ -427,6 +448,7 @@ ax.set_yticks(np.arange(-.5, 20, 1))
 ax.set_yticklabels([])
 ax.set_xticklabels([])
 ax.set_title('Hiking Trail')
+
 ax2 = plt.subplot(222)
 cmap2 = colors.ListedColormap(['red', 'blue'])
 ax2.imshow(inputmatrix, cmap2)
@@ -436,6 +458,7 @@ ax2.set_yticks(np.arange(-.5, 20, 1))
 ax2.set_yticklabels([])
 ax2.set_xticklabels([])
 ax2.set_title('Fixed Image')
+
 ax3 = plt.subplot(221)
 ax3.imshow(original, cmap2)
 ax3.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
@@ -444,7 +467,8 @@ ax3.set_yticks(np.arange(-.5, 20, 1))
 ax3.set_yticklabels([])
 ax3.set_xticklabels([])
 ax3.set_title('Original Image')
-ax4 = plt.subplot(224)
+
+ax4 = plt.subplot(236)
 ax4.imshow(bestpathvisual, cmap)
 ax4.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
 ax4.set_xticks(np.arange(-.5, 20, 1))
@@ -452,4 +476,13 @@ ax4.set_yticks(np.arange(-.5, 20, 1))
 ax4.set_yticklabels([])
 ax4.set_xticklabels([])
 ax4.set_title('A* Shortest Path')
+
+ax5 = plt.subplot(235)
+ax5.imshow(fulloutputlist, cmap)
+ax5.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
+ax5.set_xticks(np.arange(-.5, 20, 1))
+ax5.set_yticks(np.arange(-.5, 20, 1))
+ax5.set_yticklabels([])
+ax5.set_xticklabels([])
+ax5.set_title('Entire Hiking Trail')
 plt.show()
