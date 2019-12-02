@@ -19,7 +19,7 @@ Marked = []  # Seeds that have already been explored
 StartOfPath = []
 EndOfPath = [0, 0]  # [X, Y]
 visited = []
-fullvisited = []
+fullvisited = []  # Normally, the trail finding stops once it reaches the end. This list is for finding the entire trail
 
 
 def addtolist(node):  # param: [X, Y]
@@ -300,7 +300,6 @@ def reconstruct(camefrom, current):
     totalpath = []
     while c != StartOfPath:
         i = 0
-        newc = None
         while i < camefrom.__len__():
             if camefrom[i][0] == c:
                 newc = camefrom[i][1]
